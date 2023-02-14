@@ -9,7 +9,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     db foodDatabase;
-    foodDatabase.addFood(QLatin1String("hotdog"), 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"));
+    foodDatabase.addFood(QLatin1String("hotdog"), db::Entree, 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"));
+
+    QVector<Food*> foods = foodDatabase.getByType(db::Entree);
+
+    for (Food *food : foods) {
+        qInfo() << food->getName();
+    }
 }
 
 MainWindow::~MainWindow()
