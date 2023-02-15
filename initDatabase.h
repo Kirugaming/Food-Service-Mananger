@@ -6,7 +6,8 @@
 
 const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), price double, ingredients varchar(255)))"); // >.<
 const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, price, ingredients) VALUES (?, ?, ?))");
-
+const auto FEEDBACK_SQL = QLatin1String(R"(CREATE TABLE Feedback(id INTEGER PRIMARY KEY AUTOINCREMENT, Date varchar(255), Food_Rating int, Speed int, Freshness int, Cleanliness int, Ambiance int, Recommend int))");
+const auto INSERT_FEEDBACK_SQL = QLatin1String(R"(INSERT INTO Feedback(Date, Food_Rating, Speed, Freshness, Cleanliness, Ambiance, Recommend) VALUES (?, ?, ?, ?, ?, ?, ?))");
 class db {
 public:
 
@@ -24,6 +25,8 @@ public:
         QSqlQuery q;
         if (!q.exec(FOOD_SQL)) // create table if not exist
             qInfo() << q.lastError(); // just ingore the error if it exists
+        if (!q.exec(FEEDBACK_SQL)) // create table if not exist
+            qInfo() << q.lastError();
     }
 
     // When adding strings to this method use QLatin1String("string example)
@@ -39,6 +42,24 @@ public:
             q.exec(); // run sql code
         }
     }
+    void addFeedback(const QString &date, int &Food_Rating, int &Speed, int &Freshness, int &Cleanliness, int &Ambiance, int &Recommend){
+        QSqlQuery feedback;
+        if(!feedback.prepare(INSERT_FEEDBACK_SQL)){
+            qCritical() << feedback.lastError();
+        }
+        else{
+            feedback.addBindValue(date);
+            feedback.addBindValue(Food_Rating);
+            feedback.addBindValue(Speed);
+            feedback.addBindValue(Freshness);
+            feedback.addBindValue(Cleanliness);
+            feedback.addBindValue(Ambiance);
+            feedback.addBindValue(Recommend);
+
+            feedback.exec();
+        }
+    }
+
 };
 
 
