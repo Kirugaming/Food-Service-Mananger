@@ -141,6 +141,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <property name="dragEnabled">
           <bool>true</bool>
          </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragDrop</enum>
+         </property>
          <property name="viewMode">
           <enum>QListView::IconMode</enum>
          </property>
