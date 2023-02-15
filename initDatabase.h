@@ -67,7 +67,7 @@ public:
 
         QSqlQuery q;
         if (!q.exec(FOOD_SQL)) // create table if not exist
-            qInfo() << q.lastError(); // just ingore the error if it exists
+            qInfo() << q.lastError() << "just ignore this"; // just ingore the error if it exists
     }
 
     // When adding strings to this method use QLatin1String("string example)
@@ -96,6 +96,23 @@ public:
 
         return foodList;
 
+    }
+
+    bool deleteById (int id) {
+        QSqlQuery q;
+        // delete row of id
+        q.prepare("DELETE FROM Food WHERE id = ?");
+        q.addBindValue(id); // replace null (?) with id
+        q.exec(); // run sql code
+        // check if delete
+        q.prepare("SELECT * FROM Food WHERE id = ?");
+        q.addBindValue(id); // replace null (?) with id
+
+        if (!q.exec()) { // run sql code and see if there isn't a error
+            qCritical() << q.lastError();
+            return false;
+        }
+        return true;
     }
 
 
