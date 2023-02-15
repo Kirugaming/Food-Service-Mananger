@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include <iostream>
+using namespace std;
+
 #include "./ui_mainwindow.h"
+#include "initDatabase.h"
 
 
 bool adminMode = false;
@@ -10,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    db foodDatabase;
+    foodDatabase.addFood(QLatin1String("hotdog"), 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"));
 }
 
 MainWindow::~MainWindow()
@@ -56,4 +61,21 @@ void MainWindow::on_adminButton_toggled(bool checked)
     }
 }
 
+
+
+void MainWindow::on_listWidget_2_itemEntered(QListWidgetItem *item)
+{
+    std::cout << "Item added\n";
+    QStringList myStringList;
+    for (int i = 0; i < 5; ++i)
+        myStringList.append(item->text());
+    std::cout << &myStringList;
+    std::cout << "\n";
+}
+
+
+void MainWindow::on_listWidget_2_itemClicked(QListWidgetItem *item)
+{
+    std::cout << "Item clicked\n";
+}
 
