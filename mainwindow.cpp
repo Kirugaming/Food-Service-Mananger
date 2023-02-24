@@ -1,9 +1,15 @@
 #include "mainwindow.h"
+#include <iostream>
+using namespace std;
+
 #include "./ui_mainwindow.h"
 #include "initDatabase.h"
 #include "BestFitLine.h"
 #include <iostream>
 using namespace std;
+
+
+bool adminMode = false;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,6 +28,16 @@ MainWindow::MainWindow(QWidget *parent)
     myLine.addPoint(5.0,1.0);
     myLine.addPoint(6.0,3.0);
     cout<< myLine.slope();
+    foodDatabase.addFood(QLatin1String("burger"), db::Entree, 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"));
+
+    QVector<Food*> foods = foodDatabase.getByType(db::Entree);
+
+    for (Food *food : foods) {
+        qInfo() << food->getName();
+    }
+    qInfo() << foodDatabase.deleteById(14);
+
+
 }
 
 MainWindow::~MainWindow()

@@ -8,8 +8,55 @@ const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY 
 const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, price, ingredients) VALUES (?, ?, ?))");
 const auto FEEDBACK_SQL = QLatin1String(R"(CREATE TABLE Feedback(id INTEGER PRIMARY KEY AUTOINCREMENT, Date varchar(255), Food_Rating int, Speed int, Freshness int, Cleanliness int, Ambiance int, Recommend int))");
 const auto INSERT_FEEDBACK_SQL = QLatin1String(R"(INSERT INTO Feedback(Date, Food_Rating, Speed, Freshness, Cleanliness, Ambiance, Recommend) VALUES (?, ?, ?, ?, ?, ?, ?))");
+const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), type INTEGER, price double, ingredients varchar(255)))"); // >.<
+const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, type, price, ingredients) VALUES (?, ?, ?, ?))");
+
+class Food { // food model f
+private:
+    int id;
+    QString name;
+    int type;
+    double price;
+    QString ingredients;
+public:
+
+    Food(int id, const QString name, int type, double price, const QString ingredients) {
+        this->id = id;
+        this->name = name;
+        this->type = type;
+        this->price = price;
+        this->ingredients = ingredients;
+    }
+
+    int getId() {
+        return this->id;
+    }
+
+    QString getName() {
+        return this->name;
+    }
+
+    int getType() {
+        return this->type;
+    }
+
+    double getPrice() {
+        return this->price;
+    }
+
+    QString getIngredients() {
+        return this->ingredients;
+    }
+};
+
 class db {
 public:
+    enum FOODTYPE {
+        Appetizer = 0,
+        Drink = 1,
+        Entree = 2,
+        Dessert = 3
+    };
 
     db() {
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
@@ -27,6 +74,7 @@ public:
             qInfo() << q.lastError(); // just ingore the error if it exists
         if (!q.exec(FEEDBACK_SQL)) // create table if not exist
             qInfo() << q.lastError();
+            qInfo() << q.lastError() << "just ignore this"; // just ingore the error if it exists
     }
 
     // When adding strings to this method use QLatin1String("string example)
@@ -36,12 +84,44 @@ public:
             qCritical() << q.lastError();
         } else {
             q.addBindValue(name); // fills null entry for name column
+            q.addBindValue(type); // fills null entry for type column
             q.addBindValue(price); // fills null entry for price column
             q.addBindValue(ingredients); // fills null entry for ingredients column
 
             q.exec(); // run sql code
         }
     }
+    // give food enum parameter or exact num equivalent to type
+    QVector<Food*> getByType (int type) {
+        QSqlQuery query(QString("SELECT * FROM Food WHERE type=%1").arg(type)); // formats type into sql string for database execution
+        // returns table of food entries based off the type
+        QVector<Food*> foodList;
+        while(query.next()) { // go through each row in table
+            // add new food to list with stuff from table
+            foodList.append(new Food(query.value(0).toInt(), query.value(1).toString(), query.value(2).toInt(), query.value(3).toDouble(), query.value(4).toString()));
+        }
+
+        return foodList;
+
+    }
+
+    bool deleteById (int id) {
+        QSqlQuery q;
+        // delete row of id
+        q.prepare("DELETE FROM Food WHERE id = ?");
+        q.addBindValue(id); // replace null (?) with id
+        q.exec(); // run sql code
+        // check if delete
+        q.prepare("SELECT * FROM Food WHERE id = ?");
+        q.addBindValue(id); // replace null (?) with id
+
+        if (!q.exec()) { // run sql code and see if there isn't a error
+            qCritical() << q.lastError();
+            return false;
+        }
+        return true;
+    }
+
     void addFeedback(const QString &date, int &Food_Rating, int &Speed, int &Freshness, int &Cleanliness, int &Ambiance, int &Recommend){
         QSqlQuery feedback;
         if(!feedback.prepare(INSERT_FEEDBACK_SQL)){
@@ -62,7 +142,9 @@ public:
 
 };
 
+private:
 
+};
 
 
 
