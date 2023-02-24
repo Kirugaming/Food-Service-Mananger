@@ -4,6 +4,7 @@ using namespace std;
 
 #include "./ui_mainwindow.h"
 #include "initDatabase.h"
+#include <QListWidget>
 #include "BestFitLine.h"
 #include <iostream>
 using namespace std;
@@ -17,17 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     db foodDatabase;
-    foodDatabase.addFood(QLatin1String("hotdog"), 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"));
-    int five=5;
-    foodDatabase.addFeedback(QLatin1String("2/15/2023"),five,five,five,five,five,five);
-    BESTFITLINE myLine;
-    myLine.addPoint(1.0,5.0);
-    myLine.addPoint(2.0,4.0);
-    myLine.addPoint(3.0,2.0);
-    myLine.addPoint(4.0,2.0);
-    myLine.addPoint(5.0,1.0);
-    myLine.addPoint(6.0,3.0);
-    cout<< myLine.slope();
     foodDatabase.addFood(QLatin1String("burger"), db::Entree, 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"));
 
     QVector<Food*> foods = foodDatabase.getByType(db::Entree);
@@ -42,6 +32,75 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    setWindowTitle("Drag and drop from QListWidget v1");
+    resize(350,250);
+
+
     delete ui;
+}
+
+void MainWindow::on_appetizers_btn_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_drinks_btn_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow::on_entrees_btn_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_desserts_btn_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::on_adminButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::on_adminButton_toggled(bool checked)
+{
+    if(checked) {
+        adminMode = true;
+    }
+    else {
+        adminMode = false;
+    }
+}
+
+
+void MainWindow::on_listWidget_2_itemDoubleClicked(QListWidgetItem *item)
+{
+    std::cout << "NEW ITEM REMOVED" << endl << flush;
+    // order.erase(std::remove(order.begin(), order.end(), item->text().toStdString()), order.end());
+    int row = ui->listWidget_2->row(item);
+    order.erase( order.begin() + row);
+    delete item;
+    std::cout << "Current Order: ";
+    for (string i: order)
+        std::cout << i << ' ';
+    std::cout << "\n" << flush;
+
+
+}
+
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+
+
+    ui->listWidget_2->addItem(item->clone());
+    std::cout << "NEW ITEM ENTERED" << endl << flush;
+    std::cout << item->text().toStdString() << endl;
+    order.push_back(item->text().toStdString());
+    std::cout << "Current Order: ";
+    for (string i: order)
+        std::cout << i << ' ';
+    std::cout << "\n" << flush;
 }
 
