@@ -36,9 +36,9 @@ private slots:
 
     void on_adminButton_toggled(bool checked);
 
-    void on_listWidget_2_itemEntered(QListWidgetItem *item);
+    void on_listWidget_2_itemDoubleClicked(QListWidgetItem *item);
 
-    void on_listWidget_2_itemClicked(QListWidgetItem *item);
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

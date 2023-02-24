@@ -30,7 +30,49 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout" rowstretch="1,0">
-     <item row="1" column="3" colspan="5">
+     <item row="0" column="9">
+      <widget class="QLabel" name="order">
+       <property name="text">
+        <string>ORDER</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="appetizers_btn">
+       <property name="text">
+        <string>Appetizers</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QPushButton" name="entrees_btn">
+       <property name="text">
+        <string>Entrees</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="drinks_btn">
+       <property name="text">
+        <string>Drinks</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="8">
+      <widget class="QRadioButton" name="adminButton">
+       <property name="text">
+        <string>Admin Mode</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QPushButton" name="desserts_btn">
+       <property name="text">
+        <string>Desserts</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3" colspan="6">
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
         <number>3</number>
@@ -131,7 +173,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>421</width>
+           <width>501</width>
            <height>491</height>
           </rect>
          </property>
@@ -139,7 +181,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <bool>true</bool>
          </property>
          <property name="dragEnabled">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="dragDropMode">
           <enum>QAbstractItemView::DragDrop</enum>
@@ -182,57 +224,47 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </property>
          </item>
         </widget>
+        <widget class="QWidget" name="widget" native="true">
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>250</y>
+           <width>120</width>
+           <height>80</height>
+          </rect>
+         </property>
+        </widget>
        </widget>
       </widget>
      </item>
-     <item row="0" column="5">
-      <widget class="QPushButton" name="entrees_btn">
-       <property name="text">
-        <string>Entrees</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="6">
-      <widget class="QPushButton" name="desserts_btn">
-       <property name="text">
-        <string>Desserts</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="7">
-      <widget class="QRadioButton" name="adminButton">
-       <property name="text">
-        <string>Admin Mode</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="drinks_btn">
-       <property name="text">
-        <string>Drinks</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="appetizers_btn">
-       <property name="text">
-        <string>Appetizers</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="8">
+     <item row="1" column="9">
       <widget class="QListWidget" name="listWidget_2">
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="tabletTracking">
+        <bool>true</bool>
+       </property>
+       <property name="acceptDrops">
+        <bool>true</bool>
+       </property>
        <property name="dragDropMode">
         <enum>QAbstractItemView::DropOnly</enum>
        </property>
       </widget>
      </item>
-     <item row="0" column="8">
-      <widget class="QLabel" name="order">
-       <property name="text">
-        <string>ORDER</string>
+     <item row="0" column="7">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-      </widget>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>
@@ -250,16 +282,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionadd_file"/>
    </widget>
    <addaction name="menuFood_Service_Manager"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionadd_file">
-   <property name="text">
-    <string>add file</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

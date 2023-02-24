@@ -2,11 +2,16 @@
 #include <iostream>
 using namespace std;
 
+#include <vector>
 #include "./ui_mainwindow.h"
 #include "initDatabase.h"
+#include <QListWidget>
 
 
 bool adminMode = false;
+std::vector<string> order;
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -71,20 +76,32 @@ void MainWindow::on_adminButton_toggled(bool checked)
 }
 
 
-
-void MainWindow::on_listWidget_2_itemEntered(QListWidgetItem *item)
+void MainWindow::on_listWidget_2_itemDoubleClicked(QListWidgetItem *item)
 {
-    std::cout << "Item added\n";
-    QStringList myStringList;
-    for (int i = 0; i < 5; ++i)
-        myStringList.append(item->text());
-    std::cout << &myStringList;
-    std::cout << "\n";
+    std::cout << "NEW ITEM REMOVED" << endl << flush;
+    // order.erase(std::remove(order.begin(), order.end(), item->text().toStdString()), order.end());
+    int row = ui->listWidget_2->row(item);
+    order.erase( order.begin() + row);
+    delete item;
+    std::cout << "Current Order: ";
+    for (string i: order)
+        std::cout << i << ' ';
+    std::cout << "\n" << flush;
+
+
 }
 
-
-void MainWindow::on_listWidget_2_itemClicked(QListWidgetItem *item)
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    std::cout << "Item clicked\n";
+
+
+    ui->listWidget_2->addItem(item->clone());
+    std::cout << "NEW ITEM ENTERED" << endl << flush;
+    std::cout << item->text().toStdString() << endl;
+    order.push_back(item->text().toStdString());
+    std::cout << "Current Order: ";
+    for (string i: order)
+        std::cout << i << ' ';
+    std::cout << "\n" << flush;
 }
 
