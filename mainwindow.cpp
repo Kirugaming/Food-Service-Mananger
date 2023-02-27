@@ -13,15 +13,15 @@ std::vector<string> order;
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+        : QMainWindow(parent)
+        , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     db foodDatabase;
-    foodDatabase.addFood(QLatin1String("burger"), db::Entree, 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"));
+    foodDatabase.addFood(QLatin1String("burger"), Food::Entree, 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
 
-    QVector<Food*> foods = foodDatabase.getByType(db::Entree);
+    QVector<Food*> foods = foodDatabase.getByType(Food::Entree);
 
     for (Food *food : foods) {
         qInfo() << food->getName();

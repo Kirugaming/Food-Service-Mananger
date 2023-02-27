@@ -4,8 +4,8 @@
 #include <QtSql>
 #include<QDebug>
 
-const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), type INTEGER, price double, ingredients varchar(255)))"); // >.<
-const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, type, price, ingredients) VALUES (?, ?, ?, ?))");
+const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), type INTEGER, price double, ingredients varchar(255), imgName VARCHAR(255)))"); // >.<
+const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, type, price, ingredients, imgName) VALUES (?, ?, ?, ?, ?))");
 
 class Food { // food model f
 private:
@@ -14,14 +14,22 @@ private:
     int type;
     double price;
     QString ingredients;
+    QString imgFileName;
 public:
+    enum FOODTYPE {
+        Appetizer = 0,
+        Drink = 1,
+        Entree = 2,
+        Dessert = 3
+    };
 
-    Food(int id, const QString name, int type, double price, const QString ingredients) {
+    Food(int id, const QString name, int type, double price, const QString ingredients, QString imgFileName) {
         this->id = id;
         this->name = name;
         this->type = type;
         this->price = price;
         this->ingredients = ingredients;
+        this->imgFileName = imgFileName;
     }
 
     int getId() {
@@ -43,16 +51,15 @@ public:
     QString getIngredients() {
         return this->ingredients;
     }
+
+    QString getImageName(){
+        return this->imgFileName;
+    }
 };
 
 class db {
 public:
-    enum FOODTYPE {
-        Appetizer = 0,
-        Drink = 1,
-        Entree = 2,
-        Dessert = 3
-    };
+
 
     db() {
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
@@ -71,7 +78,7 @@ public:
     }
 
     // When adding strings to this method use QLatin1String("string example)
-    void addFood (const QString &name, int type, double price, const QString &ingredients ) {
+    void addFood (const QString &name, int type, double price, const QString &ingredients, const QString &imgName ) {
         QSqlQuery q;
         if (!q.prepare(INSERT_FOOD_SQL)) { // creates new row and null entries under specified columns (name, type, price, ingredients)
             qCritical() << q.lastError();
@@ -80,6 +87,7 @@ public:
             q.addBindValue(type); // fills null entry for type column
             q.addBindValue(price); // fills null entry for price column
             q.addBindValue(ingredients); // fills null entry for ingredients column
+            q.addBindValue(imgName);
 
             q.exec(); // run sql code
         }
@@ -91,7 +99,7 @@ public:
         QVector<Food*> foodList;
         while(query.next()) { // go through each row in table
             // add new food to list with stuff from table
-            foodList.append(new Food(query.value(0).toInt(), query.value(1).toString(), query.value(2).toInt(), query.value(3).toDouble(), query.value(4).toString()));
+            foodList.append(new Food(query.value(0).toInt(), query.value(1).toString(), query.value(2).toInt(), query.value(3).toDouble(), query.value(4).toString(), query.value(5).toString()));
         }
 
         return foodList;
@@ -103,13 +111,9 @@ public:
         // delete row of id
         q.prepare("DELETE FROM Food WHERE id = ?");
         q.addBindValue(id); // replace null (?) with id
-        q.exec(); // run sql code
-        // check if delete
-        q.prepare("SELECT * FROM Food WHERE id = ?");
-        q.addBindValue(id); // replace null (?) with id
 
         if (!q.exec()) { // run sql code and see if there isn't a error
-            qCritical() << q.lastError();
+            qCritical() << q.lastError() << "::FAILED TO DELETE FROM DB::";
             return false;
         }
         return true;
