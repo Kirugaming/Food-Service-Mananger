@@ -60,6 +60,9 @@
      </item>
      <item row="0" column="8">
       <widget class="QRadioButton" name="adminButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>Admin Mode</string>
        </property>

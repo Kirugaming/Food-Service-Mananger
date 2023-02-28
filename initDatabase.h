@@ -119,9 +119,6 @@ public:
         return true;
     }
 
-
-private:
-
 };
 
 

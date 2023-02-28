@@ -8,6 +8,7 @@ using namespace std;
 #include <QListWidget>
 
 
+
 bool adminMode = false;
 std::vector<string> order;
 
@@ -62,13 +63,16 @@ void MainWindow::on_desserts_btn_clicked()
 
 void MainWindow::on_adminButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(2);
+    //ui->stackedWidget->setCurrentIndex(2);
+    adminWindow->show();
+    this->close();
 }
 
 void MainWindow::on_adminButton_toggled(bool checked)
 {
     if(checked) {
         adminMode = true;
+
     }
     else {
         adminMode = false;

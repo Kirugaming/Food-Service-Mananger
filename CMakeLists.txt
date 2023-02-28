@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
         initDatabase.h
         customrectitem.cpp
         customrectitem.h
+        admin.h admin.cpp admin.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
