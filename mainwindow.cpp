@@ -6,7 +6,7 @@ using namespace std;
 #include "./ui_mainwindow.h"
 #include "initDatabase.h"
 #include <QListWidget>
-
+#include <QListWidgetItem>
 
 
 bool adminMode = false;
@@ -26,6 +26,31 @@ MainWindow::MainWindow(QWidget *parent)
 
     for (Food *food : foods) {
         qInfo() << food->getName();
+        QString name = food->getName();
+        QListWidgetItem item1 = *new QListWidgetItem(name);
+
+        item1.setData(1, food->getImageName());
+        item1.setData(2, food->getName());
+        item1.setData(3, food->getId());
+        item1.setData(4, food->getIngredients());
+        item1.setData(5, food->getPrice());
+        item1.setData(6, food->getType());
+        QIcon icon("images/" + food->getImageName());
+        item1.setIcon(icon);
+        QFont font("Roboto Thin", 10);
+        item1.setFont(font);
+        if(food->getType() == 0) {
+            ui->appetizersWidget->insertItem(0,item1.clone());
+        }
+        if(food->getType() == 1) {
+            ui->drinksWidget->insertItem(0,item1.clone());
+        }
+        if(food->getType() == 2) {
+            ui->entreesWidget->insertItem(0,item1.clone());
+        }
+        if(food->getType() == 3) {
+            ui->dessertsWidget->insertItem(0,item1.clone());
+        }
     }
     qInfo() << foodDatabase.deleteById(14);
 
@@ -95,10 +120,47 @@ void MainWindow::on_listWidget_2_itemDoubleClicked(QListWidgetItem *item)
 
 }
 
-void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+void MainWindow::on_appetizersWidget_itemDoubleClicked(QListWidgetItem *item)
 {
+    ui->listWidget_2->addItem(item->clone());
+    std::cout << "NEW ITEM ENTERED" << endl << flush;
+    std::cout << item->text().toStdString() << endl;
+    order.push_back(item->text().toStdString());
+    std::cout << "Current Order: ";
+    for (string i: order)
+        std::cout << i << ' ';
+    std::cout << "\n" << flush;
+}
 
 
+void MainWindow::on_dessertsWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    ui->listWidget_2->addItem(item->clone());
+    std::cout << "NEW ITEM ENTERED" << endl << flush;
+    std::cout << item->text().toStdString() << endl;
+    order.push_back(item->text().toStdString());
+    std::cout << "Current Order: ";
+    for (string i: order)
+        std::cout << i << ' ';
+    std::cout << "\n" << flush;
+}
+
+
+void MainWindow::on_drinksWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    ui->listWidget_2->addItem(item->clone());
+    std::cout << "NEW ITEM ENTERED" << endl << flush;
+    std::cout << item->text().toStdString() << endl;
+    order.push_back(item->text().toStdString());
+    std::cout << "Current Order: ";
+    for (string i: order)
+        std::cout << i << ' ';
+    std::cout << "\n" << flush;
+}
+
+
+void MainWindow::on_entreesWidget_itemDoubleClicked(QListWidgetItem *item)
+{
     ui->listWidget_2->addItem(item->clone());
     std::cout << "NEW ITEM ENTERED" << endl << flush;
     std::cout << item->text().toStdString() << endl;
