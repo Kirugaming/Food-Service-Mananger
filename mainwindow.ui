@@ -248,7 +248,7 @@
       </widget>
      </item>
      <item row="3" column="9">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="finishOrderButton">
        <property name="text">
         <string>Order Now</string>
        </property>

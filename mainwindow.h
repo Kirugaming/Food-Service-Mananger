@@ -51,6 +51,8 @@ private slots:
 
     void on_entreesWidget_itemEntered(QListWidgetItem *item);
 
+    void on_finishOrderButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 

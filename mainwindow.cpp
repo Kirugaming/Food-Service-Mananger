@@ -8,6 +8,7 @@ using namespace std;
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <cmath>
+#include <QMessageBox>
 
 bool adminMode = false;
 double cost = 0;
@@ -215,5 +216,17 @@ void MainWindow::on_entreesWidget_itemDoubleClicked(QListWidgetItem *item)
 void MainWindow::on_entreesWidget_itemEntered(QListWidgetItem *item)
 {
 
+}
+
+
+void MainWindow::on_finishOrderButton_clicked()
+{
+    order.clear();
+    ui->listWidget_2->clear();
+    cost = 0;
+    ui->cost->setText("$" + QString::number(cost));
+    QMessageBox msgBox;
+    msgBox.setText("The order has been sent to the kitchen.");
+    msgBox.exec();
 }
 
