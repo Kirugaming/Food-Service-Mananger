@@ -29,20 +29,19 @@
       <height>541</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout" rowstretch="1,0">
-     <item row="0" column="9">
-      <widget class="QLabel" name="order">
-       <property name="text">
-        <string>ORDER</string>
+    <layout class="QGridLayout" name="gridLayout" rowstretch="1,0,0,0">
+     <item row="0" column="7">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="appetizers_btn">
-       <property name="text">
-        <string>Appetizers</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
        </property>
-      </widget>
+      </spacer>
      </item>
      <item row="0" column="5">
       <widget class="QPushButton" name="entrees_btn">
@@ -51,27 +50,31 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="drinks_btn">
-       <property name="text">
-        <string>Drinks</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="8">
-      <widget class="QRadioButton" name="adminButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>Admin Mode</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="6">
       <widget class="QPushButton" name="desserts_btn">
        <property name="text">
         <string>Desserts</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="9">
+      <widget class="QLabel" name="cost">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="9">
+      <widget class="QLabel" name="order">
+       <property name="text">
+        <string>ORDER</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="drinks_btn">
+       <property name="text">
+        <string>Drinks</string>
        </property>
       </widget>
      </item>
@@ -90,6 +93,21 @@
            <height>491</height>
           </rect>
          </property>
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::NoDragDrop</enum>
+         </property>
+         <property name="defaultDropAction">
+          <enum>Qt::IgnoreAction</enum>
+         </property>
+         <property name="movement">
+          <enum>QListView::Static</enum>
+         </property>
          <property name="viewMode">
           <enum>QListView::IconMode</enum>
          </property>
@@ -104,6 +122,21 @@
            <width>501</width>
            <height>491</height>
           </rect>
+         </property>
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::NoDragDrop</enum>
+         </property>
+         <property name="defaultDropAction">
+          <enum>Qt::IgnoreAction</enum>
+         </property>
+         <property name="movement">
+          <enum>QListView::Static</enum>
          </property>
          <property name="viewMode">
           <enum>QListView::IconMode</enum>
@@ -120,6 +153,21 @@
            <height>491</height>
           </rect>
          </property>
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::NoDragDrop</enum>
+         </property>
+         <property name="defaultDropAction">
+          <enum>Qt::IgnoreAction</enum>
+         </property>
+         <property name="movement">
+          <enum>QListView::Static</enum>
+         </property>
          <property name="viewMode">
           <enum>QListView::IconMode</enum>
          </property>
@@ -135,14 +183,26 @@
            <height>491</height>
           </rect>
          </property>
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
          <property name="acceptDrops">
           <bool>true</bool>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
          </property>
          <property name="dragEnabled">
           <bool>false</bool>
          </property>
          <property name="dragDropMode">
-          <enum>QAbstractItemView::DragDrop</enum>
+          <enum>QAbstractItemView::NoDragDrop</enum>
+         </property>
+         <property name="defaultDropAction">
+          <enum>Qt::IgnoreAction</enum>
+         </property>
+         <property name="movement">
+          <enum>QListView::Static</enum>
          </property>
          <property name="viewMode">
           <enum>QListView::IconMode</enum>
@@ -150,39 +210,15 @@
          <property name="selectionRectVisible">
           <bool>true</bool>
          </property>
-         <item>
-          <property name="text">
-           <string>Water</string>
-          </property>
-          <property name="font">
-           <font>
-            <family>Roboto Thin</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="icon">
-           <iconset theme="applications-graphics">
-            <normalon>C:/Users/Aditya/Downloads/637384528077200000.jpg</normalon>
-           </iconset>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Coke</string>
-          </property>
-          <property name="font">
-           <font>
-            <family>Roboto Thin</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>C:/Users/Aditya/Downloads/000145352.jpg</normaloff>C:/Users/Aditya/Downloads/000145352.jpg</iconset>
-          </property>
-         </item>
         </widget>
        </widget>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="appetizers_btn">
+       <property name="text">
+        <string>Appetizers</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="9">
@@ -197,22 +233,26 @@
         <bool>true</bool>
        </property>
        <property name="dragDropMode">
-        <enum>QAbstractItemView::DropOnly</enum>
+        <enum>QAbstractItemView::NoDragDrop</enum>
        </property>
       </widget>
      </item>
-     <item row="0" column="7">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+     <item row="0" column="8">
+      <widget class="QRadioButton" name="adminButton">
+       <property name="enabled">
+        <bool>true</bool>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
+       <property name="text">
+        <string>Admin Mode</string>
        </property>
-      </spacer>
+      </widget>
+     </item>
+     <item row="3" column="9">
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Order Now</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

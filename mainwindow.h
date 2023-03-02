@@ -49,6 +49,8 @@ private slots:
 
     void on_entreesWidget_itemDoubleClicked(QListWidgetItem *item);
 
+    void on_entreesWidget_itemEntered(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
 
