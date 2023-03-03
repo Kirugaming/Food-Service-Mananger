@@ -10,17 +10,18 @@ using namespace std;
 using namespace std;
 
 
+
 bool adminMode = false;
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+        : QMainWindow(parent)
+        , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     db foodDatabase;
-    foodDatabase.addFood(QLatin1String("burger"), db::Entree, 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"));
+    foodDatabase.addFood(QLatin1String("burger"), Food::Entree, 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
 
-    QVector<Food*> foods = foodDatabase.getByType(db::Entree);
+    QVector<Food*> foods = foodDatabase.getByType(Food::Entree);
 
     for (Food *food : foods) {
         qInfo() << food->getName();
@@ -61,13 +62,16 @@ void MainWindow::on_desserts_btn_clicked()
 
 void MainWindow::on_adminButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(2);
+    //ui->stackedWidget->setCurrentIndex(2);
+    adminWindow->show();
+    this->close();
 }
 
 void MainWindow::on_adminButton_toggled(bool checked)
 {
     if(checked) {
         adminMode = true;
+
     }
     else {
         adminMode = false;

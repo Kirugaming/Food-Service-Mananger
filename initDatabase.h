@@ -4,13 +4,10 @@
 #include <QtSql>
 #include<QDebug>
 
-const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), price double, ingredients varchar(255)))"); // >.<
-const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, price, ingredients) VALUES (?, ?, ?))");
+const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), type INTEGER, price double, ingredients varchar(255), imgName VARCHAR(255)))"); // >.<
+const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, type, price, ingredients, imgName) VALUES (?, ?, ?, ?, ?))");
 const auto FEEDBACK_SQL = QLatin1String(R"(CREATE TABLE Feedback(id INTEGER PRIMARY KEY AUTOINCREMENT, Date varchar(255), Food_Rating int, Speed int, Freshness int, Cleanliness int, Ambiance int, Recommend int))");
 const auto INSERT_FEEDBACK_SQL = QLatin1String(R"(INSERT INTO Feedback(Date, Food_Rating, Speed, Freshness, Cleanliness, Ambiance, Recommend) VALUES (?, ?, ?, ?, ?, ?, ?))");
-const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), type INTEGER, price double, ingredients varchar(255)))"); // >.<
-const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, type, price, ingredients) VALUES (?, ?, ?, ?))");
-
 class Food { // food model f
 private:
     int id;
@@ -18,9 +15,16 @@ private:
     int type;
     double price;
     QString ingredients;
+    QString imgFileName;
 public:
+    enum FOODTYPE {
+        Appetizer = 0,
+        Drink = 1,
+        Entree = 2,
+        Dessert = 3
+    };
 
-    Food(int id, const QString name, int type, double price, const QString ingredients) {
+    Food(int id, const QString name, int type, double price, const QString ingredients, QString imgFileName) {
         this->id = id;
         this->name = name;
         this->type = type;
@@ -47,16 +51,15 @@ public:
     QString getIngredients() {
         return this->ingredients;
     }
+
+    QString getImageName(){
+        return this->imgFileName;
+    }
 };
 
 class db {
 public:
-    enum FOODTYPE {
-        Appetizer = 0,
-        Drink = 1,
-        Entree = 2,
-        Dessert = 3
-    };
+
 
     db() {
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
@@ -78,15 +81,16 @@ public:
     }
 
     // When adding strings to this method use QLatin1String("string example)
-    void addFood (const QString &name, double price, const QString &ingredients ) {
+    void addFood (const QString &name, int type, double price, const QString &ingredients, const QString &imgName ) {
         QSqlQuery q;
-        if (!q.prepare(INSERT_FOOD_SQL)) { // creates new row and null entries under specified columns (name, price, ingredients)
+        if (!q.prepare(INSERT_FOOD_SQL)) { // creates new row and null entries under specified columns (name, type, price, ingredients)
             qCritical() << q.lastError();
         } else {
             q.addBindValue(name); // fills null entry for name column
             q.addBindValue(type); // fills null entry for type column
             q.addBindValue(price); // fills null entry for price column
             q.addBindValue(ingredients); // fills null entry for ingredients column
+            q.addBindValue(imgName);
 
             q.exec(); // run sql code
         }
@@ -98,7 +102,7 @@ public:
         QVector<Food*> foodList;
         while(query.next()) { // go through each row in table
             // add new food to list with stuff from table
-            foodList.append(new Food(query.value(0).toInt(), query.value(1).toString(), query.value(2).toInt(), query.value(3).toDouble(), query.value(4).toString()));
+            foodList.append(new Food(query.value(0).toInt(), query.value(1).toString(), query.value(2).toInt(), query.value(3).toDouble(), query.value(4).toString(), query.value(5).toString()));
         }
 
         return foodList;
@@ -116,10 +120,18 @@ public:
         q.addBindValue(id); // replace null (?) with id
 
         if (!q.exec()) { // run sql code and see if there isn't a error
-            qCritical() << q.lastError();
+            qCritical() << q.lastError() << "::FAILED TO DELETE FROM DB::";
             return false;
         }
         return true;
+    }
+    QVector<Feedback*> getByMonth(int month){
+        QSqlQuery query(QString("SELECT * FROM Feedback WHERE month=%1").arg(month));
+        QVector<Feedback*> FeedbackList;
+        while(query.next()){
+            FeedbackList.append(new Feedback(query.value(0).toInt(),query.value(1).toString(),query.value(2).toInt(),query.value(3).toInt(),query.value(4).toInt(),query.value(5).toInt(),query.value(6).toInt(),query.value(7).toInt()));
+        }
+        return FeedbackList;
     }
 
     void addFeedback(const QString &date, int &Food_Rating, int &Speed, int &Freshness, int &Cleanliness, int &Ambiance, int &Recommend){

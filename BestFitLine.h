@@ -1,5 +1,6 @@
 #ifndef BESTFITLINE_H
 #define BESTFITLINE_H
+#include <QLine>
 class BESTFITLINE{
     public:
         double xsum;
@@ -7,6 +8,7 @@ class BESTFITLINE{
         double product;
         double xsquared;
         int size;
+        QLineSeries
         void addPoint(double x,double y){
             size++;
             xsum+=x;

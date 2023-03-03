@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include "customrectitem.h"
 #include <QKeyEvent>
+#include"admin.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -19,6 +20,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    Admin *adminWindow = new Admin();
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
