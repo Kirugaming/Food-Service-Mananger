@@ -20,8 +20,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    Admin *adminWindow = new Admin();
-
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

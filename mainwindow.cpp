@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     db foodDatabase;
+
     foodDatabase.addFood(QLatin1String("burger"), Food::Entree, 5.99, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
 
     QVector<Food*> foods = foodDatabase.getByType(Food::Entree);
@@ -64,6 +65,9 @@ void MainWindow::on_desserts_btn_clicked()
 void MainWindow::on_adminButton_clicked()
 {
     //ui->stackedWidget->setCurrentIndex(2);
+
+    Admin *adminWindow = new Admin();
+
     adminWindow->show();
     this->close();
 }

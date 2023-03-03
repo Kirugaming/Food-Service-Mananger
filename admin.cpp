@@ -1,6 +1,8 @@
 #include "admin.h"
 #include "ui_admin.h"
 #include <QtSql>
+#include <QDebug>
+#include "initDatabase.h"
 
 Admin::Admin(QWidget *parent) :
     QMainWindow(parent),
@@ -8,12 +10,27 @@ Admin::Admin(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //QSqlQuery *query;
-    //query->prepare("SELECT ")
-    //ui->foodTable->setModel();
+
+
+
+    db menu;
+
+    this->ui->menuTableView->setModel(menu.getEditableModel());
+    this->ui->menuTableView->show();
+
+
 }
+
 
 Admin::~Admin()
 {
     delete ui;
 }
+
+void Admin::on_customerButton_clicked()
+{
+    MainWindow *customerMode = new MainWindow();
+    customerMode->show();
+    this->close();
+}
+
