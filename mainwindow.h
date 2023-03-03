@@ -39,7 +39,17 @@ private slots:
 
     void on_listWidget_2_itemDoubleClicked(QListWidgetItem *item);
 
-    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+    void on_appetizersWidget_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_dessertsWidget_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_drinksWidget_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_entreesWidget_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_entreesWidget_itemEntered(QListWidgetItem *item);
+
+    void on_finishOrderButton_clicked();
 
 private:
     Ui::MainWindow *ui;
