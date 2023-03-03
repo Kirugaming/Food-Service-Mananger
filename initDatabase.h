@@ -3,6 +3,7 @@
 
 #include <QtSql>
 #include<QDebug>
+#include "editablesqlmodel.h"
 
 const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), type INTEGER, price double, ingredients varchar(255), imgName VARCHAR(255)))"); // >.<
 const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, type, price, ingredients, imgName) VALUES (?, ?, ?, ?, ?))");
@@ -64,7 +65,7 @@ public:
     db() {
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
         db.setHostName("kiru");
-        db.setDatabaseName("resturantDB");
+        db.setDatabaseName("resturantDB.db");
         db.setUserName("kiru"); // Database settings
         db.setPassword("kiru");
         bool isDbOk = db.open();
@@ -78,6 +79,12 @@ public:
         if (!q.exec(FEEDBACK_SQL)) // create table if not exist
             qInfo() << q.lastError();
             qInfo() << q.lastError() << "just ignore this"; // just ingore the error if it exists
+    }
+
+    EditableSqlModel * getEditableModel() {
+        EditableSqlModel *model = new EditableSqlModel();
+        model->setQuery("SELECT * FROM Food");
+        return model;
     }
 
     // When adding strings to this method use QLatin1String("string example)
