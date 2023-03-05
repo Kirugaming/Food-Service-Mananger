@@ -19,6 +19,7 @@ set(PROJECT_SOURCES
         mainwindow.h
         mainwindow.ui
         initDatabase.h
+        BestFitLine.h
         customrectitem.cpp
         customrectitem.h
         admin.h admin.cpp admin.ui

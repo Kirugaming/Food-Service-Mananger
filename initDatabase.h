@@ -7,7 +7,8 @@
 
 const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), type INTEGER, price double, ingredients varchar(255), imgName VARCHAR(255)))"); // >.<
 const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, type, price, ingredients, imgName) VALUES (?, ?, ?, ?, ?))");
-
+const auto FEEDBACK_SQL = QLatin1String(R"(CREATE TABLE Feedback(id INTEGER PRIMARY KEY AUTOINCREMENT, Date varchar(255), Food_Rating int, Speed int, Freshness int, Cleanliness int, Ambiance int, Recommend int))");
+const auto INSERT_FEEDBACK_SQL = QLatin1String(R"(INSERT INTO Feedback(Date, Food_Rating, Speed, Freshness, Cleanliness, Ambiance, Recommend) VALUES (?, ?, ?, ?, ?, ?, ?))");
 class Food { // food model f
 private:
     int id;
@@ -30,7 +31,6 @@ public:
         this->type = type;
         this->price = price;
         this->ingredients = ingredients;
-        this->imgFileName = imgFileName;
     }
 
     int getId() {
@@ -75,6 +75,9 @@ public:
 
         QSqlQuery q;
         if (!q.exec(FOOD_SQL)) // create table if not exist
+            qInfo() << q.lastError(); // just ingore the error if it exists
+        if (!q.exec(FEEDBACK_SQL)) // create table if not exist
+            qInfo() << q.lastError();
             qInfo() << q.lastError() << "just ignore this"; // just ingore the error if it exists
     }
 
@@ -118,6 +121,10 @@ public:
         // delete row of id
         q.prepare("DELETE FROM Food WHERE id = ?");
         q.addBindValue(id); // replace null (?) with id
+        q.exec(); // run sql code
+        // check if delete
+        q.prepare("SELECT * FROM Food WHERE id = ?");
+        q.addBindValue(id); // replace null (?) with id
 
         if (!q.exec()) { // run sql code and see if there isn't a error
             qCritical() << q.lastError() << "::FAILED TO DELETE FROM DB::";
@@ -125,6 +132,36 @@ public:
         }
         return true;
     }
+    QVector<Feedback*> getByMonth(int month){
+        QSqlQuery query(QString("SELECT * FROM Feedback WHERE month=%1").arg(month));
+        QVector<Feedback*> FeedbackList;
+        while(query.next()){
+            FeedbackList.append(new Feedback(query.value(0).toInt(),query.value(1).toString(),query.value(2).toInt(),query.value(3).toInt(),query.value(4).toInt(),query.value(5).toInt(),query.value(6).toInt(),query.value(7).toInt()));
+        }
+        return FeedbackList;
+    }
+
+    void addFeedback(const QString &date, int &Food_Rating, int &Speed, int &Freshness, int &Cleanliness, int &Ambiance, int &Recommend){
+        QSqlQuery feedback;
+        if(!feedback.prepare(INSERT_FEEDBACK_SQL)){
+            qCritical() << feedback.lastError();
+        }
+        else{
+            feedback.addBindValue(date);
+            feedback.addBindValue(Food_Rating);
+            feedback.addBindValue(Speed);
+            feedback.addBindValue(Freshness);
+            feedback.addBindValue(Cleanliness);
+            feedback.addBindValue(Ambiance);
+            feedback.addBindValue(Recommend);
+
+            feedback.exec();
+        }
+    }
+
+};
+
+private:
 
 };
 
