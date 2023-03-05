@@ -105,6 +105,32 @@
      <string>Go Back to Customer Mode</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="addFoodButton">
+    <property name="geometry">
+     <rect>
+      <x>599</x>
+      <y>400</y>
+      <width>111</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add Food to Menu</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="refresh">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>400</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Refresh</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTableView>
 #include "mainwindow.h"
+#include "initDatabase.h"
 
 namespace Ui {
 class Admin;
@@ -15,12 +16,17 @@ class Admin : public QMainWindow
 
 public:
     explicit Admin(QWidget *parent = nullptr);
+    db menu;
     ~Admin();
 
 
 
 private slots:
     void on_customerButton_clicked();
+
+    void on_addFoodButton_clicked();
+
+    void on_refresh_clicked();
 
 private:
     Ui::Admin *ui;

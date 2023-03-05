@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     db foodDatabase;
+    /*
     foodDatabase.addFood(QLatin1String("Krabby Patty"), Food::Entree, 1.50, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
     foodDatabase.addFood(QLatin1String("Double Krabby Patty"), Food::Entree, 2.25, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
     foodDatabase.addFood(QLatin1String("Triple Krabby Patty"), Food::Entree, 3.25, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
@@ -30,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     foodDatabase.addFood(QLatin1String("Krabby Fries"), Food::Appetizer, 1.50, QLatin1String("Kelp, Salt"), QString("krabbyfries.jpg"));
     foodDatabase.addFood(QLatin1String("Kelp Shake"), Food::Drink, 1.25, QLatin1String("Kelp, Mystery Sauce"), QString("kelpshake.jpg"));
     foodDatabase.addFood(QLatin1String("SeaFoam Soda"), Food::Drink, 1.25, QLatin1String("Hawaiian Punch, Lime Sherbet, Jolly Rancher"), QString("fizzbomb.jpg"));
-
+    */
 
     QVector<Food*> foods = foodDatabase.getByType(0);
     foods.append(foodDatabase.getByType(1));

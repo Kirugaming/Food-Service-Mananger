@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
         customrectitem.h
         admin.h admin.cpp admin.ui
         editablesqlmodel.cpp editablesqlmodel.h
+        embeddeddialog.ui embeddeddialog.cpp embeddeddialog.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
