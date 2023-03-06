@@ -50,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
         item1.setData(5, food->getPrice());
         // item1.setData(6, food->getType());
         QIcon icon("images/" + food->getImageName());
+        std::cout << food->getImageName().toStdString() << endl;
+        std::cout << food->getName().toStdString() << endl;
         item1.setIcon(icon);
         QFont font("Roboto Thin", 10);
         item1.setFont(font);

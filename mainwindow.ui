@@ -81,7 +81,7 @@
      <item row="1" column="3" colspan="6">
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="appetizers">
         <widget class="QListWidget" name="appetizersWidget">

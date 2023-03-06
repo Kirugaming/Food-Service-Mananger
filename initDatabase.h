@@ -31,6 +31,7 @@ public:
         this->type = type;
         this->price = price;
         this->ingredients = ingredients;
+        this->imgFileName = imgFileName;
     }
 
     int getId() {
