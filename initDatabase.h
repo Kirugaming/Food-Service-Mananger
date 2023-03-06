@@ -58,6 +58,42 @@ public:
     }
 };
 
+class Feedback{
+private:
+    QString Date;
+    int Month,Food_Rating,Speed,Freshness,Clean,Ambiance,Recommend;
+public:
+    Feedback(QString Date,int Food_Rating,int Speed,int Freshness,int Clean,int Ambiance,int Recommend){
+        Date=this->Date;
+        Food_Rating=this->Food_Rating;
+        Speed=this->Speed;
+        Clean=this->Clean;
+        Freshness=this->Freshness;
+        Ambiance=this->Ambiance;
+        Recommend=this->Recommend;
+    }
+    int getMonth(){
+        return Month;
+    }
+    int getFood_Rating(){
+        return Food_Rating;
+    }
+    int getSpeed(){
+        return Speed;
+    }
+    int getFreshness(){
+        return Freshness;
+    }
+    int getClean(){
+        return Clean;
+    }
+    int getAmbiance(){
+        return Ambiance;
+    }
+    int getRecommend(){
+        return Recommend;
+    }
+};
 class db {
 public:
 
@@ -136,7 +172,7 @@ public:
         QSqlQuery query(QString("SELECT * FROM Feedback WHERE month=%1").arg(month));
         QVector<Feedback*> FeedbackList;
         while(query.next()){
-            FeedbackList.append(new Feedback(query.value(0).toInt(),query.value(1).toString(),query.value(2).toInt(),query.value(3).toInt(),query.value(4).toInt(),query.value(5).toInt(),query.value(6).toInt(),query.value(7).toInt()));
+            FeedbackList.append(new Feedback(query.value(1).toString(),query.value(2).toInt(),query.value(3).toInt(),query.value(4).toInt(),query.value(5).toInt(),query.value(6).toInt(),query.value(7).toInt()));
         }
         return FeedbackList;
     }
@@ -161,9 +197,7 @@ public:
 
 };
 
-private:
 
-};
 
 
 
@@ -172,4 +206,3 @@ private:
 
 
 #endif // INITDATABASE_H
-

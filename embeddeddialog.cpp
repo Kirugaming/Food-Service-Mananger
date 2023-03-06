@@ -32,7 +32,7 @@ void EmbeddedDialog::on_submitButton_clicked()
 
     q.prepare(R"(INSERT INTO Food(name, type, price, ingredients, imgName) VALUES (?, ?, ?, ?, ?))");
     q.addBindValue(ui->foodNameEdit->text());
-    q.addBindValue(ui->typeEdit->currentText());
+    q.addBindValue(ui->typeEdit->currentIndex());
     q.addBindValue(ui->priceEdit->value());
     q.addBindValue(ui->ingredientsEdit->toPlainText());
     q.addBindValue(ui->imgNameEdit->text());
