@@ -14,8 +14,6 @@ Admin::Admin(QWidget *parent) :
 
 
 
-
-
     this->ui->menuTableView->setModel(menu.getEditableModel());
     this->ui->menuTableView->show();
 

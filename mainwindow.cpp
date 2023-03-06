@@ -22,16 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     db foodDatabase;
-    /*
-    foodDatabase.addFood(QLatin1String("Krabby Patty"), Food::Entree, 1.50, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
-    foodDatabase.addFood(QLatin1String("Double Krabby Patty"), Food::Entree, 2.25, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
-    foodDatabase.addFood(QLatin1String("Triple Krabby Patty"), Food::Entree, 3.25, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
-    foodDatabase.addFood(QLatin1String("Krabby Meal"), Food::Entree, 1.25, QLatin1String("Bun, Meat, Lettuce, Cheese, Tomato, Bacon, Onion"), QString("burger.png"));
-    foodDatabase.addFood(QLatin1String("Coral Bits"), Food::Appetizer, 1.25, QLatin1String("Coral, Salt"), QString("coralbits.png"));
-    foodDatabase.addFood(QLatin1String("Krabby Fries"), Food::Appetizer, 1.50, QLatin1String("Kelp, Salt"), QString("krabbyfries.jpg"));
-    foodDatabase.addFood(QLatin1String("Kelp Shake"), Food::Drink, 1.25, QLatin1String("Kelp, Mystery Sauce"), QString("kelpshake.jpg"));
-    foodDatabase.addFood(QLatin1String("SeaFoam Soda"), Food::Drink, 1.25, QLatin1String("Hawaiian Punch, Lime Sherbet, Jolly Rancher"), QString("fizzbomb.jpg"));
-    */
 
     QVector<Food*> foods = foodDatabase.getByType(0);
     foods.append(foodDatabase.getByType(1));
@@ -106,6 +96,7 @@ void MainWindow::on_adminButton_clicked()
 {
     //ui->stackedWidget->setCurrentIndex(2);
     Admin *adminWindow = new Admin();
+    adminWindow->setWindowTitle("Food Service Admin");
     adminWindow->show();
     this->close();
 }
@@ -225,12 +216,22 @@ void MainWindow::on_entreesWidget_itemEntered(QListWidgetItem *item)
 
 void MainWindow::on_finishOrderButton_clicked()
 {
-    order.clear();
-    ui->listWidget_2->clear();
-    cost = 0;
-    ui->cost->setText("$" + QString::number(cost));
-    QMessageBox msgBox;
-    msgBox.setText("The order has been sent to the kitchen.");
-    msgBox.exec();
+    if(order.size() != 0) {
+        order.clear();
+        ui->listWidget_2->clear();
+        cost = 0;
+        ui->cost->setText("$" + QString::number(cost));
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Order Status");
+        msgBox.setText("The order has been sent to the kitchen.");
+        msgBox.exec();
+    }
+    else {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Order Error");
+        msgBox.setText("Your order is empty.");
+        msgBox.exec();
+    }
+
 }
 
