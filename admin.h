@@ -28,6 +28,8 @@ private slots:
 
     void on_refresh_clicked();
 
+    void on_graphsButton_clicked();
+
 private:
     Ui::Admin *ui;
 };

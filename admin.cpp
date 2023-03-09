@@ -4,7 +4,7 @@
 #include <QDebug>
 
 #include "embeddeddialog.h"
-
+#include "feedbackgraphs.h"
 Admin::Admin(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Admin)
@@ -48,3 +48,7 @@ void Admin::on_refresh_clicked()
     qInfo() << "refreshed";
 }
 
+void Admin::on_graphsButton_clicked(){
+    FeedbackGraphs *graphMode = new FeedbackGraphs();
+    graphMode->show();
+}

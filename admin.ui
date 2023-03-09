@@ -131,6 +131,19 @@
      <string>Refresh</string>
     </property>
    </widget>
+   <widget class="QRadioButton" name="graphsButton">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>70</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>View Feedback Graphs</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

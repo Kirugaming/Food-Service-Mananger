@@ -4,7 +4,8 @@
 #include <QtSql>
 #include<QDebug>
 #include "editablesqlmodel.h"
-
+#include <ctime>
+#include <iostream>
 const auto FOOD_SQL = QLatin1String(R"(CREATE TABLE Food(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), type INTEGER, price double, ingredients varchar(255), imgName VARCHAR(255)))"); // >.<
 const auto INSERT_FOOD_SQL = QLatin1String(R"(INSERT INTO Food(name, type, price, ingredients, imgName) VALUES (?, ?, ?, ?, ?))");
 const auto FEEDBACK_SQL = QLatin1String(R"(CREATE TABLE Feedback(id INTEGER PRIMARY KEY AUTOINCREMENT, Date varchar(255), Food_Rating int, Speed int, Freshness int, Cleanliness int, Ambiance int, Recommend int))");
@@ -62,37 +63,45 @@ public:
 class Feedback{
 private:
     QString Date;
-    int Month,Food_Rating,Speed,Freshness,Clean,Ambiance,Recommend;
+    int Day,Month,Food_Rating,Speed,Freshness,Clean,Ambiance,Recommend;
 public:
     Feedback(QString Date,int Food_Rating,int Speed,int Freshness,int Clean,int Ambiance,int Recommend){
-        Date=this->Date;
-        Food_Rating=this->Food_Rating;
-        Speed=this->Speed;
-        Clean=this->Clean;
-        Freshness=this->Freshness;
-        Ambiance=this->Ambiance;
-        Recommend=this->Recommend;
+        this->Date=Date;
+        this->Food_Rating=Food_Rating;
+        this->Speed=Speed;
+        this->Clean=Clean;
+        this->Freshness=Freshness;
+        this->Ambiance=Ambiance;
+        this->Recommend=Recommend;
+        this->Day=Date.split(" ")[1].toInt();
+
+    }
+    QString getDate(){
+        return this->Date;
+    }
+    int getDay(){
+        return this->Day;
     }
     int getMonth(){
-        return Month;
+        return this->Month;
     }
     int getFood_Rating(){
-        return Food_Rating;
+        return this->Food_Rating;
     }
     int getSpeed(){
-        return Speed;
+        return this->Speed;
     }
     int getFreshness(){
-        return Freshness;
+        return this->Freshness;
     }
     int getClean(){
-        return Clean;
+        return this->Clean;
     }
     int getAmbiance(){
-        return Ambiance;
+        return this->Ambiance;
     }
     int getRecommend(){
-        return Recommend;
+        return this->Recommend;
     }
 };
 class db {
@@ -169,22 +178,50 @@ public:
         }
         return true;
     }
-    QVector<Feedback*> getByMonth(int month){
-        QSqlQuery query(QString("SELECT * FROM Feedback WHERE month=%1").arg(month));
+    bool deletefbById (int id) {
+        QSqlQuery q;
+        // delete row of id
+        q.prepare("DELETE FROM Feedback WHERE id = ?");
+        q.addBindValue(id); // replace null (?) with id
+        q.exec(); // run sql code
+        // check if delete
+        q.prepare("SELECT * FROM Feedback WHERE id = ?");
+        q.addBindValue(id); // replace null (?) with id
+
+        if (!q.exec()) { // run sql code and see if there isn't a error
+            qCritical() << q.lastError() << "::FAILED TO DELETE FROM DB::";
+            return false;
+        }
+        return true;
+    }
+    QVector<Feedback*> getByMonth(QString month){
+        QSqlQuery query(QString("SELECT * FROM Feedback"));
         QVector<Feedback*> FeedbackList;
         while(query.next()){
-            FeedbackList.append(new Feedback(query.value(1).toString(),query.value(2).toInt(),query.value(3).toInt(),query.value(4).toInt(),query.value(5).toInt(),query.value(6).toInt(),query.value(7).toInt()));
+            Feedback* fb=new Feedback(query.value(1).toString(),query.value(2).toInt(),query.value(3).toInt(),query.value(4).toInt(),query.value(5).toInt(),query.value(6).toInt(),query.value(7).toInt());
+            std::cout << "Date:";
+            std::cout << fb->getDate().left(3).toStdString();
+            if(fb->getDate().left(3)==month){
+                FeedbackList.append(fb);
+            }
+
         }
         return FeedbackList;
     }
 
-    void addFeedback(const QString &date, int &Food_Rating, int &Speed, int &Freshness, int &Cleanliness, int &Ambiance, int &Recommend){
+    void addFeedback( int Food_Rating, int Speed, int Freshness, int Cleanliness, int Ambiance, int Recommend){
         QSqlQuery feedback;
         if(!feedback.prepare(INSERT_FEEDBACK_SQL)){
             qCritical() << feedback.lastError();
         }
         else{
-            feedback.addBindValue(date);
+            time_t now=time(0);
+            QString dt=ctime(&now);
+            QString format;
+            format.append(dt.mid(4,3));
+            format.append(" "+dt.mid(8,2));
+            format.append(" "+dt.right(5));
+            feedback.addBindValue(format);
             feedback.addBindValue(Food_Rating);
             feedback.addBindValue(Speed);
             feedback.addBindValue(Freshness);
@@ -194,6 +231,9 @@ public:
 
             feedback.exec();
         }
+    }
+    void clearFeedback(){
+        QSqlQuery(QString("DELETE * FROM Feedback"));
     }
 
 };
